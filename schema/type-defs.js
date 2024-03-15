@@ -1,25 +1,50 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
-  type User {
+  type Recipe {
+    id: Int!
     name: String!
-    age: Int
-    email: String!
+    ingredients: [String]
+    instructions: [String]
+    prepTimeMinutes: Int
+    cookTimeMinutes: Int
+    servings: Int 
+    difficulty: String
+    cuisine: String
+    caloriesPerServing: Int
+    tags: [String]
+    userId: Int
+    image: String
+    rating: Float
+    reviewCount: Int
+    mealType: [String]
+  }
+
+  type RecipeList {
+    recipes: [Recipe!]!
+    totalCount: Int!
   }
 
   type Query {
-    users: [User!]!
-    user(email: String!): User!
+    recipes : [Recipe!]!
+    recipe(id: Int!): Recipe!
   }
 
-  input CreateUserInput {
+  input CreateRecipeInput {
     name: String!
-    age: Int
-    email: String!
+    prepTimeMinutes: Int
+    cookTimeMinutes: Int
+    servings: Int 
+    difficulty: String
+    cuisine: String
+    caloriesPerServing: Int
+    image: String
+    rating: Float
+    reviewCount: Int
   }
 
   type Mutation {
-    createUser(input: CreateUserInput!): User
+    createRecipe(input: CreateRecipeInput!): Recipe!
   }
 `;
 

@@ -1,21 +1,29 @@
-const User = require("../models/user.js");
+const Recipe = require("../models/recipe.js");
 
 const resolvers = {
   Query: {
-    async users() {
-      const users = await User.find();
-      return users;
+    // async recipes() {
+    //   const recipes = await Recipe.find();
+    //   return recipes;
+    // },
+    async recipes() {
+      // const limit = args?.limit ?? 10
+      // const offset = args?.offset ?? 0
+      const recipes = await Recipe.find();
+      // const totalCount = await Recipe.countDocuments()
+      return recipes;
     },
-    async user(parent, args) {
-      const email = args.email;
-      const user = await User.findOne({ email });
-      return user;
+    async recipe(parent, args) {
+      const id = args.id;
+      const recipe = await Recipe.findOne({ id });
+      return recipe;
     },
   },
   Mutation: {
-    async createUser(parent, args) {
-      let newUser = args.input;
-      const userCreated = await User.create(newUser);
+    async createRecipe(parent, args) {
+      let newRecipe = args.input;
+      newRecipe.id = Math.floor(Math.random() * (100000 - 50 + 1)) + 50;
+      const userCreated = await Recipe.create(newRecipe);
       return userCreated;
     },
   },
